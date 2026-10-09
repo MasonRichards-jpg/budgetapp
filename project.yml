@@ -1,0 +1,47 @@
+name: BudgetApp
+options:
+  bundleIdPrefix: com.masonrichards
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+targets:
+  BudgetApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - BudgetApp
+    dependencies:
+      - target: BudgetWidget
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.masonrichards.budgetapp
+        CODE_SIGN_ENTITLEMENTS: BudgetApp/BudgetApp.entitlements
+        GENERATE_INFOPLIST_FILE: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_CFBundleDisplayName: Daily Budget
+  BudgetWidget:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - BudgetWidget
+      - BudgetApp/Models.swift
+      - BudgetApp/BudgetStore.swift
+      - BudgetApp/Theme.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.masonrichards.budgetapp.widget
+        CODE_SIGN_ENTITLEMENTS: BudgetWidget/BudgetWidget.entitlements
+    info:
+      path: BudgetWidget/Info.plist
+      properties:
+        CFBundleDisplayName: Daily Budget
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
